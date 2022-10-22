@@ -1,7 +1,14 @@
-Este programa está sendo desenvolvido com o objetivo de aprimorar meus conhecimentos em python.
+# Hardwalian Monitoring System
 
-A intenção é desenvolver um programa de monitoramento de sistema para ser exibido em uma tela extra.
-Adquiri uma tela com entrada HDMI de 5 polegadas no AliExpress e gostaria de instala-la dentro do meu gabinete para exibir as informações deste software.
+```console
+# clone the repo
+$ git clone https://github.com/AuggieAlmeida/CPU-GPU-MonitorSystem.git
 
-Atualizarei conforme der andamento no projeto.
-Quais quer duvidas estou a disposição.
+# change the working directory to sherlock
+$ cd CPU-GPU-Monitor
+
+# install the requirements
+$ python3 -m pip install -r requirements.txt
+```
+
+#### Made by Augusto Almeida & Henrique de Paula
