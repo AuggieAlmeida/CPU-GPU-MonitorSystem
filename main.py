@@ -1,78 +1,35 @@
-# no cmd: pip install psutill, pip install GPUtil, pip install py-cpuinfo, pip install wmi
+from tkinter import Tk
+from lib.functions import set_window_center
+from controller.homeController import HomeController
+from model.homeModel import HomeModel
+from view.homeView import HomeView
 
-import GPUtil
-import cpuinfo
 
-from psutil import virtual_memory, cpu_freq, cpu_count, cpu_percent
-from time import sleep
+class App(Tk):
+    def __init__(self):
+        super().__init__()
 
-def Mhz_to_Ghz(value):
-    return f'{value/1000: .2f}'
+        self.controller = None
+        self.view = None
+        self.config()
 
-def bytes_to_gigas(value):
-    return f'{value/1024/1024/1024: .1f}'
+        self.mainloop()
 
-def mega_to_giga(value):
-    return f'{value/1024: .1f}'
+    def config(self):
+        self.title('Hardwalien')
+        set_window_center(self, 800, 480)
+        self.resizable(False, False)
+        self.init_home()
 
-def memGpuPercent(total, using):
-    return f'{(using*100)/total: .1f}'
+    def set_page(self):
+        pass
 
-def dec_to_percent(value):
-    return f'{value*100: .1f}'
+    def init_home(self):
+        self.view = HomeView(self)
+        self.controller = HomeController(HomeModel, self.view)
+        self.view.set_controller(self.controller)
+        self.view.place(x=0, y=0, relwidth=1, relheight=1)
 
-#-----DADOS CPU------
-def getCpuName():
-    cpu = cpuinfo.get_cpu_info()
-    return cpu['brand_raw']
 
-def getCpuFreq():
-    return Mhz_to_Ghz(cpu_freq().current)
-
-def getCpuCount():
-    return cpu_count()
-
-def getCpuUsedPercent():
-    return cpu_percent()
-#-----DADOS CPU------
-
-#-----DADOS GPU------
-def getGpuName():
-    gpu = GPUtil.getGPUs()[0]
-    return gpu.name
-
-def getGpuTemp():
-    gpu = GPUtil.getGPUs()[0]
-    return gpu.temperature
-
-def getGpuMemoryTotal():
-    gpu = GPUtil.getGPUs()[0]
-    return mega_to_giga(gpu.memoryTotal)
-
-def getGpuMemoryUsed():
-    gpu = GPUtil.getGPUs()[0]
-    return mega_to_giga(gpu.memoryUsed)
-
-def getGpuMemoryPercent():
-    gpu = GPUtil.getGPUs()[0]
-    return memGpuPercent(gpu.memoryTotal, gpu.memoryUsed)
-
-def getGpuUsedPercent():
-    gpu = GPUtil.getGPUs()[0]
-    return dec_to_percent(gpu.load)
-#-----DADOS GPU------
-
-#-----DADOS RAM------
-def getRamTotal():
-    return bytes_to_gigas(virtual_memory().total)
-
-def getRamUsed():
-    return bytes_to_gigas(virtual_memory().used)
-
-def getRamUsedPercent():
-    return virtual_memory().percent
-
-def getRamFree():
-    x = (virtual_memory().total-virtual_memory().used)
-    return f'{bytes_to_gigas(x)}'
-#-----DADOS RAM------
+if __name__ == '__main__':
+    app = App()
